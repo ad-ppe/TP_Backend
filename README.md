@@ -1,122 +1,117 @@
-# TP_Backend
-TP_Back PHP un peux gros
+# 📁 TP PHP – Plateforme de Gestion Collaborative de Projets & Tâches
 
-
-# 📁 TP - Plateforme de Gestion Collaborative de Projets & Tâches
-
-Ce projet est une application **back-end en PHP** développée dans le cadre d’un TP visant à concevoir un système de gestion collaborative de projets et de tâches. Il utilise les bonnes pratiques de développement web telles que **l’architecture MVC**, **la programmation orientée objet (POO)**, **PDO pour l’accès à la base de données**, et des mécanismes de **sécurité** robustes (authentification, validation, rôles).
+Ce projet est une application **back-end en PHP** structurée selon l’architecture **MVC**, avec un fort accent sur la **programmation orientée objet (POO)**, la sécurité via **PDO**, et la gestion des **utilisateurs, projets et tâches**. Le projet inclut également une **API RESTful** en bonus.
 
 ---
 
-## 🧱 Architecture Générale (MVC)
+## ✅ Fonctionnalités réalisées
+
+- ✅ Architecture MVC complète
+- ✅ Connexion sécurisée à MySQL via PDO
+- ✅ CRUD pour projets
+- ✅ CRUD pour tâches liées à des projets
+- ✅ Gestion des utilisateurs avec rôles (`admin`, `chef`, `collab`)
+- ✅ Authentification sécurisée (`password_hash`)
+- ✅ Dashboard utilisateur après login
+- ✅ Contrôle d’accès selon les rôles (`Auth::checkAccess`)
+- ✅ Vues d’erreur (`403`, `404`)
+- ✅ API RESTful pour projets et tâches (`GET`, `POST`, `PUT`, `DELETE`)
+- ❌ Swagger non implémenté (bonus non requis)
+
+---
+
+## 🧱 Structure du projet
 
 ```
 gestion_projets/
 ├── app/
-│   ├── Core/               → Classes de base (Model, Controller, Router)
-│   ├── Controllers/        → Contrôleurs métiers (Project, Task, User)
-│   ├── Models/             → Modèles métiers (Project, Task, User)
-│   ├── Views/              → Templates HTML (list.php, form.php...)
-│   └── Interfaces/         → Interface CRUD commune
-├── config/                 → Configuration de la BDD
-├── public/                 → Front Controller (index.php)
-└── vendor/ (optionnel)     → Composer (si utilisé)
+│   ├── Controllers/
+│   │   ├── ProjectController.php
+│   │   ├── TaskController.php
+│   │   ├── UserController.php
+│   │   └── Api/
+│   │       ├── ProjectApiController.php
+│   │       └── TaskApiController.php
+│   ├── Models/
+│   │   ├── Project.php
+│   │   ├── Task.php
+│   │   └── User.php
+│   ├── Views/
+│   │   ├── projects/
+│   │   ├── tasks/
+│   │   ├── users/
+│   │   └── errors/
+│   ├── Core/
+│   │   ├── Model.php
+│   │   ├── Controller.php
+│   │   ├── Router.php
+│   │   └── Auth.php
+│   └── Interfaces/
+│       └── CrudInterface.php
+├── config/
+│   └── config.php
+├── public/
+│   └── index.php
+└── database/
+    ├── projects.sql
+    ├── tasks.sql
+    └── users.sql
 ```
 
 ---
 
-## 🎯 Objectifs pédagogiques
+## 🚀 Installation & lancement
 
-- Comprendre et appliquer l'architecture MVC
-- Mettre en œuvre l’héritage, le polymorphisme et les interfaces en PHP
-- Utiliser PDO pour se connecter à une base de données de façon sécurisée
-- Créer un système d’authentification avec rôles (RBAC)
-- Organiser un projet PHP de manière modulaire et évolutive
-- (Bonus) Développer une API RESTful
+1. Cloner ou copier le projet dans votre serveur local (`htdocs` ou dossier de travail)
+2. Créer la base de données `gestion_projets`
+3. Importer les fichiers SQL depuis `/database/`
+4. Configurer les identifiants dans `config/config.php`
+5. Lancer le projet :
 
----
+```bash
+php -S localhost:8000 -t public
+```
 
-## ✅ Méthode de Résolution (classique et structurée)
-
-### Étape 1 : Initialisation & Configuration du Projet
-
-- [x] Création du fichier `config/config.php` avec les infos BDD
-- [x] Mise en place de la classe `Model.php` (connexion PDO centralisée)
-- [x] Création de `public/index.php` (Front Controller de base)
-- [x] Arborescence initiale mise en place
-
-### Étape 2 : Développement du noyau (Core)
-
-- [x] Implémentation de la classe `Controller.php` pour charger les vues
-- [ ] Création du routeur `Router.php`
-- [ ] Création de l’interface `CrudInterface.php` (méthodes CRUD)
-
-### Étape 3 : Module Projets
-
-- [ ] Modèle `Project.php` implémentant `CrudInterface`
-- [ ] Contrôleur `ProjectController.php`
-- [ ] Vues associées : `list.php`, `detail.php`, `form.php`
-
-### Étape 4 : Module Tâches
-
-- [ ] Modèle `Task.php` + Contrôleur + Vues
-- [ ] Statut (à faire, en cours, terminé), commentaires, fichiers, tags
-
-### Étape 5 : Module Utilisateurs
-
-- [ ] `User.php` + `UserController.php`
-- [ ] Authentification (inscription, login, logout)
-- [ ] Rôles (Admin, Chef de Projet, Collaborateur)
-
-### Étape 6 : Sécurité
-
-- [ ] Hash des mots de passe (`password_hash`)
-- [ ] Protection des routes selon rôle
-- [ ] Validation des formulaires
-- [ ] Requêtes PDO préparées
-
-### Étape 7 : Dashboard & Notifications
-
-- [ ] Vue tableau de bord utilisateur
-- [ ] Notifications (email et/ou internes)
-
-### Étape 8 (Bonus) : API RESTful
-
-- [ ] Création d’API endpoints (`GET`, `POST`, `PUT`, `DELETE`)
-- [ ] Documentation Swagger ou équivalent
+6. Ouvrir dans le navigateur : [http://localhost:8000](http://localhost:8000)
 
 ---
 
-## ⚙️ Prérequis techniques
+## 🔄 API REST – Endpoints disponibles
+
+### Projets (`controller=ProjectApi`)
+- `GET /?controller=ProjectApi`
+- `GET /?controller=ProjectApi&id=1`
+- `POST /?controller=ProjectApi`
+- `PUT /?controller=ProjectApi&id=1`
+- `DELETE /?controller=ProjectApi&id=1`
+
+### Tâches (`controller=TaskApi`)
+- `GET /?controller=TaskApi`
+- `POST /?controller=TaskApi`
+- `PUT /?controller=TaskApi&id=1`
+- `DELETE /?controller=TaskApi&id=1`
+
+Les requêtes `POST`, `PUT` et `DELETE` doivent être envoyées avec `Content-Type: application/json`
+
+---
+
+## 📚 Technologies utilisées
 
 - PHP 8+
 - MySQL / MariaDB
-- Serveur local (XAMPP, WAMP, MAMP ou `php -S`)
-- Navigateur moderne
+- HTML/CSS (vues simples)
 - Composer (optionnel)
+- cURL / Postman pour tester l’API
 
 ---
 
-## 🚀 Lancer le projet
+## 👤 Auteur
 
-1. Cloner le repo
-2. Créer la base de données `gestion_projets`
-3. Configurer `config/config.php`
-4. Lancer le serveur :
-```bash
-php -S localhost:8000 -t public/
-```
-5. Ouvrir dans le navigateur : [http://localhost:8000](http://localhost:8000)
+TP réalisé dans le cadre de l'apprentissage PHP MVC – Mise en situation professionnelle 2025  
+**Auteur : [Ton Nom ici]**
 
 ---
 
-## 🧑‍💻 Auteur
+## 📄 Licence
 
-> TP réalisé dans le cadre de l’apprentissage PHP orienté objet (POO + MVC) — pour une architecture claire, sécurisée et maintenable.
-
----
-
-## 🔐 Licence
-
-Ce projet est libre d’usage dans un contexte pédagogique.
-
+Projet librement utilisable dans un cadre pédagogique.
