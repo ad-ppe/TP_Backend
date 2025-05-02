@@ -157,7 +157,7 @@ Les requêtes `POST`, `PUT` et `DELETE` doivent être envoyées avec `Content-Ty
 ## 👤 Auteur
 
 TP réalisé dans le cadre de l'apprentissage PHP MVC – Mise en situation professionnelle 2025  
-**Auteur : [Ton Nom ici]**
+**Auteur : Adrien DEBREUILLY**
 
 ---
 
